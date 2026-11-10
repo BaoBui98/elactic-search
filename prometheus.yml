@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  # Cấu hình cào metrics từ chính Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Cấu hình cào metrics từ ứng dụng NestJS của bạn
+  # 'host.docker.internal' cho phép container gọi về ứng dụng đang chạy ở máy host (cổng 3000)
+  - job_name: 'nestjs-app'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:3000']
+
